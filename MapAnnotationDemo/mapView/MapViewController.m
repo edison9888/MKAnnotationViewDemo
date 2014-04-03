@@ -271,7 +271,7 @@
     
     NSString *btnTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
     if (buttonIndex == 0) {
-        if (!ISIOS7) {//ios6 调用goole网页地图
+        if (!ISIOS6) {//ios6 调用goole网页地图
             NSString *urlString = [[NSString alloc]
                                    initWithFormat:@"http://maps.google.com/maps?saddr=&daddr=%.8f,%.8f&dirfl=d",self.naviCoordsGd.latitude,self.naviCoordsGd.longitude];
             
@@ -331,7 +331,7 @@
 -(NSArray*)calculateRoutesFrom{
 	NSString* apiUrlStr = [NSString stringWithFormat:@"http://maps.google.com/maps?output=dragdir&saddr=%0.8f,%0.8f&daddr=%0.8f,%0.8f", self.nowCoords.latitude, self.nowCoords.longitude, self.naviCoordsGd.latitude, self.naviCoordsGd.longitude];
 	NSURL* apiUrl = [NSURL URLWithString:apiUrlStr];
-    NSString *apiResponse = [NSString stringWithContentsOfURL:apiUrl encoding:NSUTF8StringEncoding error:nil];
+    NSString *apiResponse = [NSString stringWithContentsOfURL:apiUrl encoding:NSASCIIStringEncoding error:nil];
     
     NSString* encodedPoints = [apiResponse stringByMatching:@"points:\\\"([^\\\"]*)\\\"" capture:1L];
 	return [self decodePolyLine:[encodedPoints mutableCopy]:self.nowCoords to:self.naviCoordsGd];
@@ -420,8 +420,8 @@
     if ([overlay isKindOfClass:[MKPolyline class]]){
         MKPolylineView *lineview=[[MKPolylineView alloc] initWithOverlay:overlay] ;
         //路线颜色
-        lineview.strokeColor=[UIColor colorWithRed:69.0f/255.0f green:212.0f/255.0f blue:255.0f/255.0f alpha:0.9];
-        lineview.lineWidth=8.0;
+        lineview.strokeColor=[UIColor redColor];
+        lineview.lineWidth = 5.0;
         return lineview;
     }
     return nil;
